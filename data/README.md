@@ -15,13 +15,13 @@ So seller counts + price ranges come from **price-comparison portals**, scraped 
 | DE | idealo.de (product 200519186) | 47 | 41 | 70 | 101 |
 | CZ | Heureka (detail page) | 21 | 43 | 58 | 72 |
 | PL | Ceneo (product 96401250) | 22 | 47 | 66 | 94 |
-| RO | Google Shopping* | 6 | 41 | 69 | 97 |
+| RO | Google Shopping* | 5 | 64 | 81 | 116 |
 
-- avg€    = [79, 70, 58, 66, 69]
-- min€    = [47, 41, 43, 47, 41]
-- sellers = [25, 47, 21, 22, 6]
+- avg€    = [79, 70, 58, 66, 81]
+- min€    = [47, 41, 43, 47, 64]
+- sellers = [25, 47, 21, 22, 5]
 
-*RO has no strong price-comparison portal (price.ro/compari.ro blocked/cookie-walled) → Google Shopping sample, smaller.
+*RO investigated thoroughly: price.ro/compari.ro blocked (cookie-wall), eMAG has NO clean ANR 50ml serum listing (luxury beauty sells via Notino.ro/Douglas, not eMAG). Real RO market = 5 sellers (Notino.ro, Fragrance.com, Creme de la Creme, 2x eBay). This thinness is a genuine market fact, not a scraping gap — and itself an insight (few authorized sellers = coverage risk).
 
 ## Notes
 - Aggregators themselves (Heureka/idealo/Ceneo as a "seller") are excluded — they advertise, they don't sell.
