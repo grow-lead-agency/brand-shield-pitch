@@ -154,11 +154,11 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
 <div class="slide active">
   <div class="slide-content">
     <div class="kicker">Prepared for the CEO · Estée Lauder Group · Europe</div>
-    <h1 class="title"><em>Advanced Night Repair</em> sells<br>across Europe from <em>€96 to €61.</em></h1>
-    <p class="lede">That ~35% spread on your hero product is brand equity leaking across markets you don't fully see.
+    <h1 class="title"><em>Advanced Night Repair</em> sells<br>across Europe from <em>€100 to €48.</em></h1>
+    <p class="lede">That ~52% spread on your hero product is brand equity leaking across markets you don't fully see.
       We make every price, every seller, every market visible — and read it for you.</p>
   </div>
-  <div class="foot"><span class="brandmark">Brand Shield</span><span>Illustrative figures · replaced with your live data at pitch · Brand Shield is a working name</span></div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>Live Google Shopping data, 2026-07-01 · Brand Shield is a working name</span></div>
 </div>
 
 <!-- 2 — Three pillars: intro -->
@@ -264,7 +264,7 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
     <div class="chart-wrap" style="height:clamp(180px,32vh,300px);margin-top:18px;"><canvas id="heroChart"></canvas></div>
     <div class="legend"><span><i style="background:var(--orange)"></i>Average price (€)</span><span><i style="background:var(--blue)"></i>Minimum price (€)</span><span><i style="background:var(--gold-deep)"></i># shops offering it</span></div>
     <div class="chart-wrap" style="height:clamp(110px,18vh,160px);margin-top:8px;"><canvas id="sellerChart"></canvas></div>
-    <p class="note">Markets: FR · DE · CZ · PL · RO. Illustrative data — replaced at pitch with a live scrape of the hero product on the day.</p>
+    <p class="note">Markets: FR · DE · CZ · PL · RO. Live Google Shopping data (2026-07-01), cleaned to the 50ml serum and converted to EUR. Cheapest sellers: PL €48 (Stylevana / Allegro) vs. DE €76 — the gray-market spread, visible.</p>
   </div>
   <div class="foot"><span class="brandmark">Brand Shield</span><span>07 · Pillar 1</span></div>
 </div>
@@ -536,9 +536,9 @@ document.addEventListener('click',e=>{
 
 function drawHero(){
   const labels=['FR','DE','CZ','PL','RO'];
-  const avg=[96,93,89,78,74];
-  const min=[88,84,80,63,61];
-  const sellers=[42,38,21,17,9];
+  const avg=[86,100,86,67,80];
+  const min=[62,76,51,48,55];
+  const sellers=[8,5,7,10,8];
   const ctx=document.getElementById('heroChart');
   if(ctx){
     new Chart(ctx,{
