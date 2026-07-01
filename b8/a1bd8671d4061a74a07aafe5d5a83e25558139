@@ -1,0 +1,25 @@
+index.html
+  s_1113613f3c26ad::t_9d4686c6fba435 274
+  s_1113613f3c26ad::t_94165d049acebe 550-552
+  s_1113613f3c26ad::t_83ac96ef29d836 278
+data/README.md
+  s_1113613f3c26ad::t_a8288a8ddc732e 7-10,13-15,17-18,21-22,24
+data/parse_anr.py
+  s_1113613f3c26ad::t_e41c0c117baf04 9-10,13-16,47-48,64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "b8a1bd8671d4061a74a07aafe5d5a83e25558139",
+  "prompts": {},
+  "sessions": {
+    "s_1113613f3c26ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "37528dc7-95ed-4614-87b2-14e9b82d33e9",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Petr Rohan <petr.a.rohan@gmail.com>"
+    }
+  }
+}
