@@ -1,0 +1,36 @@
+index.html
+  s_1113613f3c26ad::t_1bc286b983ee92 267
+  s_1113613f3c26ad::t_eeb04c0c6a00c5 539-541
+  s_1113613f3c26ad::t_d8499ad7f0f486 157-158
+  s_1113613f3c26ad::t_ec2fbc903e67fe 161
+data/README.md
+  s_1113613f3c26ad::t_8fedbbf5f5ba63 1-15
+data/anr_cz.json
+  s_1113613f3c26ad::t_f3286757552513 1-1254
+data/anr_de.json
+  s_1113613f3c26ad::t_0fd2bb454d6b82 1-997
+data/anr_fr.json
+  s_1113613f3c26ad::t_190ff124f0f6d5 1-1118
+data/anr_pl.json
+  s_1113613f3c26ad::t_b3932f5c243262 1-1321
+data/anr_ro.json
+  s_1113613f3c26ad::t_eee7cfb1b62016 1-1074
+data/parse_anr.py
+  s_1113613f3c26ad::t_f55d132eaba46d 1-71
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "94ba95113409e2cdf32abd1cf36178976540294a",
+  "prompts": {},
+  "sessions": {
+    "s_1113613f3c26ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "37528dc7-95ed-4614-87b2-14e9b82d33e9",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Petr Rohan <petr.a.rohan@gmail.com>"
+    }
+  }
+}
