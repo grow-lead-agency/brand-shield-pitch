@@ -1,24 +1,30 @@
-# ANR live data (2026-07-01)
+# ANR live data (2026-07-01) — comparison-portal method
 
-Real Google Shopping data for **Estée Lauder Advanced Night Repair Synchronized Multi-Recovery Complex — 50ml Serum**,
-pulled via Apify actor `johnvc/google-shopping-api-...` across FR/DE/CZ/PL/RO.
+Real data for **ONE exact SKU: Estée Lauder Advanced Night Repair Synchronized Multi-Recovery Complex 50ml**
+(NOT the older "Synchro Recovery Complex II" — that's a different, pricier variant with far fewer sellers).
 
-- `anr_<cc>.json` — raw Apify dataset per country
-- `parse_anr.py` — cleans the data:
-  - **50ml serum only** — excludes 65ml Overnight Treatment (a cream), Concentrate, Intense Reset, Recovery Complex II, Power Pair, sets/duos/mini.
-  - **Aggregators excluded** — Heureka, Zboží, Idealo, Ceneo, Geizhals etc. are price-comparison portals, NOT sellers (they only advertise & redirect). The actual shop behind a Heureka listing is unknown from the feed, so the row is dropped.
-  - FX→EUR, avg/min/#sellers per market.
+## Why comparison portals, not Google Shopping API
+Google Shopping API (Apify) only returns "sponsored products" — a handful of paid listings, NOT the real market.
+It showed 3–8 sellers per country. The real market (what a brand manager sees on Heureka) is 20–47 sellers.
+So seller counts + price ranges come from **price-comparison portals**, scraped per product-detail page.
 
-Chart values (order FR,DE,CZ,PL,RO):
-- avg€    = [85, 80, 86, 66, 69]
-- min€    = [62, 43, 59, 48, 41]
-- #shops  = [8, 4, 4, 6, 6]
+## Sources & numbers (order FR,DE,CZ,PL,RO)
+| Market | Source | Sellers | min€ | avg€ | max€ |
+|---|---|---|---|---|---|
+| FR | idealo.fr (product 200519186) | 25 | 47 | 79 | 124 |
+| DE | idealo.de (product 200519186) | 47 | 41 | 70 | 101 |
+| CZ | Heureka (detail page) | 21 | 43 | 58 | 72 |
+| PL | Ceneo (product 96401250) | 22 | 47 | 66 | 94 |
+| RO | Google Shopping* | 6 | 41 | 69 | 97 |
 
-Cheapest per market: FR Olara €62 · DE Amazon.de €43 · CZ eBay €59 · PL Stylevana €48 · RO eBay €41.
-Spread: CZ avg €86 → RO min €41.
+- avg€    = [79, 70, 58, 66, 69]
+- min€    = [47, 41, 43, 47, 41]
+- sellers = [25, 47, 21, 22, 6]
 
-⚠️ Notes:
-- Direct e-shop URLs are NOT available via Google Shopping API (only Google redirects). Deck links open Google Shopping search per market.
-- Marketplaces (eBay, Allegro, Lamoda, Trendyol) ARE kept — they are real points of sale (third parties sell on them).
-- FX approximate (CZK 25, PLN 4.3, RON 4.97). For the pitch, use ECB daily from the EcomRadar DB.
-- Dropping Heureka changed CZ materially: the false €43 "Heureka" datapoint was an aggregator, not a seller. CZ is now avg €86 / min €59.
+*RO has no strong price-comparison portal (price.ro/compari.ro blocked/cookie-walled) → Google Shopping sample, smaller.
+
+## Notes
+- Aggregators themselves (Heureka/idealo/Ceneo as a "seller") are excluded — they advertise, they don't sell.
+- FX approximate (CZK 25, PLN 4.3, RON 4.97). For pitch, use ECB daily from EcomRadar DB.
+- Raw: det_de.json, det_fr.json, det_pl.json (idealo/ceneo), heureka_detail.json. Older Apify pulls: anr_*.json.
+- Product variant distinction (Multi-Recovery vs Complex II) is itself a product feature: "we tell apart SKUs that blur together for you."
