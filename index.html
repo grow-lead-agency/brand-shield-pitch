@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Brand Shield — Pitch</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0B0B0F;
+  --bg-soft:#121219;
+  --ink:#F4F1EA;
+  --ink-dim:#A7A39B;
+  --ink-faint:#6E6A63;
+  --gold:#C9A24B;
+  --gold-soft:#E3C77A;
+  --gold-deep:#8C6F2E;
+  --line:rgba(201,162,75,0.22);
+  --card:rgba(255,255,255,0.035);
+  --card-border:rgba(255,255,255,0.08);
+  --blue:#5B86C9;
+  --orange:#D98A3D;
+  --danger:#B5503F;
+  --font-head:'Georgia','Times New Roman',serif;
+  --font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);overflow:hidden;}
+
+/* password gate */
+#gate{position:fixed;inset:0;z-index:5000;background:var(--bg);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center;}
+#gate .gk{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);}
+#gate h1{font-family:var(--font-head);font-size:clamp(26px,5vw,44px);color:var(--ink);font-weight:600;}
+#gate p{color:var(--ink-dim);font-size:14px;max-width:340px;}
+#gate .row{display:flex;gap:10px;margin-top:6px;}
+#gate input{background:rgba(255,255,255,0.05);border:1px solid var(--line);color:var(--ink);
+  padding:12px 16px;border-radius:10px;font-size:15px;width:220px;outline:none;}
+#gate input:focus{border-color:var(--gold);}
+#gate button{background:var(--gold);border:none;color:#0B0B0F;padding:12px 22px;border-radius:10px;
+  font-weight:700;cursor:pointer;font-size:15px;}
+#gate .err{color:var(--danger);font-size:13px;min-height:18px;}
+#deck-wrap{display:none;}
+body.unlocked #gate{display:none;}
+body.unlocked #deck-wrap{display:block;}
+
+.slide-deck{position:relative;width:100vw;height:100vh;overflow:hidden;}
+@media(min-width:769px){
+  .slide-deck{max-width:calc(100vh * 16 / 9);max-height:calc(100vw * 9 / 16);margin:auto;position:absolute;inset:0;}
+}
+.slide{position:absolute;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;
+  padding:6vh 7vw;opacity:0;visibility:hidden;transition:opacity .45s ease;background:var(--bg);overflow:hidden;}
+.slide.active{opacity:1;visibility:visible;}
+.slide-content{width:100%;max-width:1100px;margin:0 auto;}
+
+.kicker{font-size:clamp(11px,1.1vw,14px);letter-spacing:.32em;text-transform:uppercase;color:var(--gold);
+  font-weight:600;margin-bottom:22px;}
+.kicker.dim{color:var(--ink-faint);}
+h1.title{font-family:var(--font-head);font-weight:600;font-size:clamp(30px,4.4vw,60px);line-height:1.08;letter-spacing:-.01em;}
+h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw,44px);line-height:1.12;}
+.title em{font-style:normal;color:var(--gold-soft);}
+.lede{font-size:clamp(15px,1.6vw,22px);color:var(--ink-dim);line-height:1.55;margin-top:20px;max-width:780px;}
+.quote{font-family:var(--font-head);font-style:italic;font-size:clamp(17px,1.9vw,26px);color:var(--ink);
+  line-height:1.45;border-left:2px solid var(--gold);padding-left:22px;}
+.foot{position:absolute;bottom:3.4vh;left:7vw;right:7vw;font-size:clamp(10px,.9vw,12px);
+  color:var(--ink-faint);letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center;}
+.brandmark{color:var(--ink-dim);letter-spacing:.28em;font-size:11px;text-transform:uppercase;}
+
+.grid{display:grid;gap:18px;margin-top:30px;}
+.g2{grid-template-columns:1fr 1fr;}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:22px 22px;}
+.card .num{font-family:var(--font-head);color:var(--gold);font-size:clamp(20px,2.2vw,30px);}
+.card h3{font-size:clamp(15px,1.5vw,19px);margin-bottom:8px;color:var(--ink);font-weight:600;}
+.card p{font-size:clamp(12.5px,1.25vw,15px);color:var(--ink-dim);line-height:1.5;}
+.card .tag{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block;}
+
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px;}
+.pillar{position:relative;background:linear-gradient(180deg,rgba(201,162,75,0.06),rgba(255,255,255,0.02));
+  border:1px solid var(--line);border-radius:16px;padding:26px 22px;}
+.pillar .pnum{font-family:var(--font-head);font-size:13px;letter-spacing:.2em;color:var(--gold-deep);text-transform:uppercase;}
+.pillar h3{font-family:var(--font-head);font-size:clamp(18px,2vw,26px);color:var(--gold-soft);margin:8px 0 12px;}
+.pillar p{font-size:clamp(12.5px,1.25vw,15px);color:var(--ink-dim);line-height:1.5;}
+.pillar .arrow{position:absolute;top:50%;right:-13px;transform:translateY(-50%);color:var(--gold-deep);font-size:20px;z-index:2;}
+.plist{list-style:none;margin-top:6px;display:flex;flex-direction:column;gap:9px;}
+.plist li{position:relative;padding-left:18px;font-size:clamp(13px,1.35vw,16px);color:var(--ink);line-height:1.35;}
+.plist li:before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--gold);}
+
+.steps{display:flex;flex-direction:column;gap:14px;margin-top:26px;}
+.step{display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--card-border);
+  border-radius:12px;padding:16px 20px;}
+.step .si{font-family:var(--font-head);color:var(--gold);font-size:22px;min-width:34px;}
+.step h3{font-size:clamp(14px,1.45vw,18px);margin-bottom:4px;}
+.step p{font-size:clamp(12px,1.2vw,14.5px);color:var(--ink-dim);line-height:1.45;}
+
+.outcomes{margin-top:24px;display:flex;flex-direction:column;gap:12px;}
+.outcome{display:flex;gap:16px;align-items:baseline;border-bottom:1px solid var(--card-border);padding-bottom:12px;}
+.outcome .ob{color:var(--gold);font-size:18px;line-height:1;}
+.outcome b{font-size:clamp(14px,1.4vw,18px);color:var(--ink);font-weight:600;}
+.outcome span{font-size:clamp(12px,1.2vw,15px);color:var(--ink-dim);}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px;}
+.stat{text-align:center;background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:24px 12px;}
+.stat .v{font-family:var(--font-head);font-size:clamp(28px,3.6vw,52px);color:var(--gold-soft);line-height:1;}
+.stat .l{font-size:clamp(11px,1.1vw,14px);color:var(--ink-dim);margin-top:10px;letter-spacing:.04em;}
+
+.chart-wrap{width:min(92%,820px);height:clamp(220px,42vh,400px);margin:26px auto 0;position:relative;}
+.legend{display:flex;gap:24px;justify-content:center;margin-top:14px;font-size:13px;color:var(--ink-dim);flex-wrap:wrap;}
+.legend i{display:inline-block;width:14px;height:3px;margin-right:7px;vertical-align:middle;}
+
+.divider .slide-content{text-align:left;}
+.divider .pill-index{font-family:var(--font-head);font-size:clamp(60px,12vw,150px);color:rgba(201,162,75,0.12);line-height:.9;font-weight:700;}
+.divider h1{margin-top:-10px;}
+
+.note{margin-top:18px;font-size:clamp(11.5px,1.1vw,13.5px);color:var(--ink-faint);font-style:italic;}
+.danger{color:var(--danger);}
+.gold{color:var(--gold-soft);}
+
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--gold);transition:width .3s;z-index:1000;}
+.nav-controls{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:18px;z-index:1000;}
+.nav-btn{background:rgba(201,162,75,0.12);border:1px solid var(--line);color:var(--gold-soft);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:16px;}
+.nav-btn:hover{background:rgba(201,162,75,0.22);}
+.slide-counter{color:var(--ink-faint);font-size:13px;letter-spacing:.1em;}
+
+@media(max-width:768px){
+  .slide{padding:5vh 7vw;}
+  .g3,.g4,.pillars,.stats{grid-template-columns:1fr;}
+  .g2{grid-template-columns:1fr;}
+  .pillar .arrow{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== PASSWORD GATE ===== -->
+<div id="gate">
+  <div class="gk">Confidential</div>
+  <h1>Brand Shield</h1>
+  <p>This presentation is private. Please enter the access phrase.</p>
+  <div class="row">
+    <input id="pw" type="password" placeholder="Access phrase" autocomplete="off" autofocus>
+    <button onclick="tryUnlock()">Enter</button>
+  </div>
+  <div class="err" id="err"></div>
+</div>
+
+<div id="deck-wrap">
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-deck">
+
+<!-- 1 — Title -->
+<div class="slide active">
+  <div class="slide-content">
+    <div class="kicker">Prepared for the CEO · Estée Lauder Group · Europe</div>
+    <h1 class="title"><em>Advanced Night Repair</em> sells<br>across Europe from <em>€96 to €61.</em></h1>
+    <p class="lede">That ~35% spread on your hero product is brand equity leaking across markets you don't fully see.
+      We make every price, every seller, every market visible — and read it for you.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>Illustrative figures · replaced with your live data at pitch · Brand Shield is a working name</span></div>
+</div>
+
+<!-- 2 — Three pillars: intro -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">What we are · three pillars</div>
+    <h2 class="title">Not an app. An <em>end-to-end</em> partner<br>built on our own data.</h2>
+    <p class="lede">On top of our own connected data and strong infrastructure, we don't just hand you the data — we <span class="gold">present and prepare it properly</span>, personalized, in the format you need. Always in collaboration with you.</p>
+    <div class="pillars" style="margin-top:28px;">
+      <div class="pillar"><div class="pnum">Pillar 1</div><h3>Discovery</h3><p>We gather the data — honestly, regularly, continuously.</p><div class="arrow">→</div></div>
+      <div class="pillar"><div class="pnum">Pillar 2</div><h3>Workspace</h3><p>We build your working environment on top of that data.</p><div class="arrow">→</div></div>
+      <div class="pillar"><div class="pnum">Pillar 3</div><h3>Executive</h3><p>We help with execution — all the way to court.</p></div>
+    </div>
+    <p class="note">End-to-end: from data collection, through your workspace, to executive action. Everything else is built on top of this data.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>02</span></div>
+</div>
+
+<!-- 3 — Three pillars: bullet slide -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">What each pillar covers</div>
+    <div class="pillars" style="margin-top:8px;align-items:start;">
+      <div class="pillar" style="padding-bottom:24px;">
+        <div class="pnum">Pillar 1</div><h3>Discovery</h3>
+        <ul class="plist">
+          <li>Price &amp; seller discovery</li>
+          <li>Catalog — products &amp; sellers</li>
+          <li>Launch / new-SKU watch</li>
+          <li>Competitive price position</li>
+        </ul>
+        <div class="arrow">→</div>
+      </div>
+      <div class="pillar" style="padding-bottom:24px;">
+        <div class="pnum">Pillar 2</div><h3>Workspace</h3>
+        <ul class="plist">
+          <li>Temperature check</li>
+          <li>Brand-protection alerts</li>
+          <li>Daily queue &amp; watchlist</li>
+          <li>Test purchase &amp; evidence</li>
+          <li>Executive reporting</li>
+        </ul>
+        <div class="arrow">→</div>
+      </div>
+      <div class="pillar" style="padding-bottom:24px;">
+        <div class="pnum">Pillar 3</div><h3>Executive</h3>
+        <ul class="plist">
+          <li>Legal cases — living folder</li>
+          <li>Partner law firm</li>
+          <li>Court-ready evidence pack</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Each item is expanded on its own slide.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>03 · navigation anchor</span></div>
+</div>
+
+<!-- 4 — No one can lie to you -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">What changes for you</div>
+    <h1 class="title">No one can <em>lie to you anymore.</em></h1>
+    <p class="lede">You see every sale of your products across all of Europe — not just in fragments. You have the data, you have the truth.</p>
+    <p class="quote" style="margin-top:26px;">And most importantly, you see what's missing today:<br><span class="gold">who is driving the price spiral down</span> — and whether it's one player across all of Europe, or a different one in each country.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>04</span></div>
+</div>
+
+<!-- ===== PILLAR 1 ===== -->
+
+<div class="slide divider">
+  <div class="slide-content">
+    <div class="pill-index">01</div>
+    <div class="kicker">Pillar 1 of 3 · Monitoring</div>
+    <h1 class="title">Discovery</h1>
+    <p class="lede">Raw data, charts, tables — gathered honestly, regularly, continuously. For sales teams and management.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>05 · Pillar 1</span></div>
+</div>
+
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Digital World Discovery</div>
+    <h2 class="title">Never blind <em>anymore</em></h2>
+    <p class="lede">Who sells your brand, where and at what price — the real price after discounts, vouchers and bundles.
+      Not the sticker price, but the one the customer actually clicks through to.</p>
+    <div class="grid g3">
+      <div class="card"><div class="num">599 → ∞</div><h3>relevant shops</h3><p>Current list, growing indefinitely. Not 222,000 — the fraction that actually sells your category.</p></div>
+      <div class="card"><div class="num">Europe</div><h3>for now — scales further</h3><p>28 markets across Europe, daily refresh. Expanding beyond the EU is no problem, just a setting.</p></div>
+      <div class="card"><div class="num">+ Launch watch</div><h3>new SKUs</h3><p>You launch something new → we immediately know where it appeared and at what price.</p></div>
+    </div>
+    <p class="note">This is the foundation — not the whole product. The value begins with what we do with the data (Pillar 2 — Workspace).</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>06 · Pillar 1</span></div>
+</div>
+
+<!-- Signature view chart -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Signature view · live data</div>
+    <h2 class="title"><em>Advanced Night Repair</em> across the main markets</h2>
+    <div class="chart-wrap" style="height:clamp(180px,32vh,300px);margin-top:18px;"><canvas id="heroChart"></canvas></div>
+    <div class="legend"><span><i style="background:var(--orange)"></i>Average price (€)</span><span><i style="background:var(--blue)"></i>Minimum price (€)</span><span><i style="background:var(--gold-deep)"></i># shops offering it</span></div>
+    <div class="chart-wrap" style="height:clamp(110px,18vh,160px);margin-top:8px;"><canvas id="sellerChart"></canvas></div>
+    <p class="note">Markets: FR · DE · CZ · PL · RO. Illustrative data — replaced at pitch with a live scrape of the hero product on the day.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>07 · Pillar 1</span></div>
+</div>
+
+<!-- Interpretation + temperature -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Reading the data</div>
+    <h2 class="title">It's not that we have data.<br><em>It's that we read it for you.</em></h2>
+    <p class="lede">Temperature check = one score per product and market, combining three views into a single thermometer:</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag">Price</span><h3>Spread &amp; undercutting</h3><p>Predatory pricing, gray market, swings in the lowest price.</p></div>
+      <div class="card"><span class="tag">Distribution</span><h3>Who sells it</h3><p>Authorized vs. unauthorized, gray channels.</p></div>
+      <div class="card"><span class="tag">Compliance</span><h3>Omnibus &amp; RRP</h3><p>Recommended prices, discount rules per market.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>08 · Pillar 1</span></div>
+</div>
+
+<!-- Competitive Price Position -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Competitive price position</div>
+    <h2 class="title">The market, <em>or just me?</em></h2>
+    <div class="grid g2">
+      <div class="card"><span class="tag">Competitor per country</span><h3>Who is higher, who is lower</h3><p>My brand vs. a key competitor in a given country. A backed answer for the boss instead of "I'm doing better, buddy".</p></div>
+      <div class="card"><span class="tag">Market vs. me</span><h3>A whole-market problem, or mine?</h3><p>If the competitor is also underpriced in the same country → market. If only me → my distribution.</p></div>
+    </div>
+    <p class="note">Part of monitoring — raw data for sales teams and management.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>09 · Pillar 1</span></div>
+</div>
+
+<!-- Price spiral -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Price spiral</div>
+    <h2 class="title">We see who is <em>driving the price spiral down</em></h2>
+    <p class="lede">Not a single snapshot — a pattern over time. And we distinguish two types of players you can't tell apart today:</p>
+    <div class="grid g2">
+      <div class="card"><span class="tag">Long-term</span><h3>Who holds the lowest price long-term</h3><p>A persistent undercutter — keeps the price below market for months. A structural problem, not a fluctuation.</p></div>
+      <div class="card"><span class="tag">Short-term</span><h3>Who is most often the cheapest</h3><p>A player who, over a short horizon, most frequently grabs the lowest price — tactical pressure on the whole market.</p></div>
+    </div>
+    <p class="note">And the key question we answer: is it <span class="gold">one player across all of Europe</span>, or a different one in each country?</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>10 · Pillar 1</span></div>
+</div>
+
+<!-- ===== PILLAR 2: WORKSPACE ===== -->
+
+<div class="slide divider">
+  <div class="slide-content">
+    <div class="pill-index">02</div>
+    <div class="kicker">Pillar 2 of 3 · Workspace</div>
+    <h1 class="title">Workspace</h1>
+    <p class="lede">From the mass of monitoring, you pick the suspicious and the important — and we turn it into tasks. For brand-protection teams, not for the CEO.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>11 · Pillar 2</span></div>
+</div>
+
+<!-- Brand Protection -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Brand Protection</div>
+    <h2 class="title">No hunting through reports.<br>You get a <em>to-do: fix this.</em></h2>
+    <p class="lede">Cherry-picking with concrete, explicit examples — <span class="gold">sellers and countries across all of Europe.</span> Not an aggregate, not a spreadsheet to decode.</p>
+    <div class="grid g2">
+      <div class="card"><span class="tag">Cherry-picked alerts</span><h3>Who dumps prices long-term</h3><p>Concrete sellers and countries. Long-term perspective + tracking anomalies and swings in the lowest price — not a one-off snapshot.</p></div>
+      <div class="card"><span class="tag">Per-SKU limit · anti-tampering</span><h3>"Below this price = fake"</h3><p>The brand sets a limit per SKU: below it, high probability of a counterfeit. The brand can't move the limit — it's a binding input, not a slider.</p></div>
+      <div class="card"><span class="tag">Dedicated pager</span><h3>We watch it across Europe for you</h3><p>"This is what we monitor and guard for you across all of Europe." So you don't have to decode data — we concentrate it into action.</p></div>
+      <div class="card"><span class="tag">Shop size</span><h3>How serious a player it is</h3><p>Every alert carries the seller's size — "number 10 of the ten smallest garage operations" vs. a large authorized player.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>12 · Pillar 2</span></div>
+</div>
+
+<!-- Pick from the mass / curation -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Not a dashboard — a workspace</div>
+    <h2 class="title">You pick from the mass what is <em>suspicious to you.</em></h2>
+    <p class="lede">Monitoring (Pillar 1) gives raw data to everyone. The Workspace is for those who actually work with brand protection — and curate what to watch more closely.</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag">Selection</span><h3>What interests me</h3><p>I flag brands, competitors and sellers that are suspicious to me for some reason.</p></div>
+      <div class="card"><span class="tag">Similar products</span><h3>Not just the same line</h3><p>I also flag similar products across lines — and have the system generate suggestions of bad price differentials.</p></div>
+      <div class="card"><span class="tag">Suggestions</span><h3>The system prompts you</h3><p>The Workspace itself suggests price anomalies and suspicious players around what I'm watching.</p></div>
+    </div>
+    <p class="note">Primarily for brand-protection people (partly legal). Not for management — they have monitoring.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>13 · Pillar 2</span></div>
+</div>
+
+<!-- Watchlist as case -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Watchlist · real tasks</div>
+    <h2 class="title">Cherry-picked sellers as <em>live cases</em>, not dashboard filters</h2>
+    <p class="lede">I watch specific shops — whether they actually stop dumping. No need to remember, click through a dashboard, and re-apply filters. I have it as an <span class="gold">assigned case / a real task.</span></p>
+    <div class="grid g2">
+      <div class="card"><span class="tag">Replaces</span><h3>A million spreadsheets + side notes</h3><p>One case = one player I'm handling. No scattered tables and notes on the side.</p></div>
+      <div class="card"><span class="tag">Phases</span><h3>Observe → active attack</h3><p>Either I just watch, or I switch to "building a case" → the evidence layer kicks in (see next).</p></div>
+    </div>
+    <p class="note">It feeds fresh data to each case — always current, not a snapshot that goes stale.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>14 · Pillar 2</span></div>
+</div>
+
+<!-- Evidence -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Evidence · court-ready</div>
+    <h2 class="title">When you go on the attack — <em>we collect the evidence for you</em></h2>
+    <p class="lede">The moment you switch a case to "active attack", the Workspace starts automatically building evidence for step 3 (Execute):</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag">Screenshot</span><h3>Price + page</h3><p>A capture of the price and the entire web listing — not just a number, but how it actually looked.</p></div>
+      <div class="card"><span class="tag">Timestamp</span><h3>A longer evidence trail</h3><p>Timestamps → a long evidentiary trail, not a one-off snapshot.</p></div>
+      <div class="card"><span class="tag">Test purchase</span><h3>We order the goods for you</h3><p>We deliberately order the product from the given shop — ordering + documentation of the purchase.</p></div>
+    </div>
+    <p class="note">Physically shipping the goods and legal action already belong to Pillar 3 (Execute). Here we build the ammunition.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>15 · Pillar 2 → 3</span></div>
+</div>
+
+<!-- ===== PILLAR 3 ===== -->
+
+<div class="slide divider">
+  <div class="slide-content">
+    <div class="pill-index">03</div>
+    <div class="kicker">Pillar 3 of 3 · Executive</div>
+    <h1 class="title">Executive</h1>
+    <p class="lede">Everything that is <span class="gold">human-in-the-loop</span> and happens outside the app. You trigger it from your queue — we (and our network) handle it in the physical world.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>16 · Pillar 3</span></div>
+</div>
+
+<!-- Three levels of action -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Three levels of action</div>
+    <h2 class="title">From a warning <em>to court</em></h2>
+    <div class="steps">
+      <div class="step"><span class="si">1</span><div><h3>Warning letter in the right jurisdiction</h3><p>The brand/sales manager submits, from their queue (watchlist / open case), that they want to send a warning. Either their legal team handles it — but it's in their queue, they see it happening — or they hand it to us / our partner law firm, which arranges delivery on the brand's behalf.</p></div></div>
+      <div class="step"><span class="si">2</span><div><h3>Sample order + recording the process</h3><p>We deliberately order the product/sample from the given shop and <span class="gold">record the entire process</span> (order → delivery → unboxing). Physical proof, not just a screenshot.</p></div></div>
+      <div class="step"><span class="si">3</span><div><h3>Litigation</h3><p>We represent — together with law firms. For smaller brands: if someone runs another brand, we advise them to use this too.</p></div></div>
+    </div>
+    <p class="note">It stands on evidence from Pillar 2 (screenshot, timestamp, test purchase). The client chooses how far to go.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>17 · Pillar 3</span></div>
+</div>
+
+<!-- Pan-European network -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Our network</div>
+    <h2 class="title">Partner law firms <em>across all of Europe</em></h2>
+    <p class="lede">It's not one selected country. We're building a network of partner law firms <span class="gold">across European jurisdictions</span> — the warning and the dispute proceed correctly under local law, wherever the seller is.</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag">Local law</span><h3>The right jurisdiction</h3><p>Warning and filing under the law of the country where the seller is based — not a universal template.</p></div>
+      <div class="card"><span class="tag">Representation</span><h3>On the brand's behalf</h3><p>The firm acts on behalf of your brand, coordinated with your legal team.</p></div>
+      <div class="card"><span class="tag">Coverage</span><h3>All of Europe</h3><p>The network grows with the markets we watch — where we monitor, we can also act.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>18 · Pillar 3</span></div>
+</div>
+
+<!-- ===== TRUST + CLOSE ===== -->
+
+<!-- Engine -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Behind the curtain</div>
+    <h2 class="title">One engine that <em>never goes blind</em></h2>
+    <p class="lede">The technical foundation beneath the consulting — not a box you buy. Running in production, today.</p>
+    <div class="grid g3">
+      <div class="card"><h3>Spots the break</h3><p>The moment it stops seeing, it knows.</p></div>
+      <div class="card"><h3>Repairs itself</h3><p>Regenerates the reader per shop, coverage compounds.</p></div>
+      <div class="card"><h3>Discovers on its own</h3><p>A self-growing map: finds and onboards new sellers automatically.</p></div>
+    </div>
+    <p class="note">AI does the heavy lifting under the hood — but the point is the outcome: your market view stays live.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>19</span></div>
+</div>
+
+<!-- Already live -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Not a vision — it's switched on</div>
+    <h2 class="title">The relevant European market, watched <em>in full — now</em></h2>
+    <div class="stats">
+      <div class="stat"><div class="v">599</div><div class="l">relevant shops</div></div>
+      <div class="stat"><div class="v">28</div><div class="l">markets</div></div>
+      <div class="stat"><div class="v">Daily</div><div class="l">refresh</div></div>
+      <div class="stat"><div class="v">Live</div><div class="l">in production</div></div>
+    </div>
+    <p class="note">Why 599, not 222,000? 222K is every shop in the region — most never touch your category. We track the fraction that actually sells products like yours. Adding a market/category is a setting, not a rebuild.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>20</span></div>
+</div>
+
+<!-- Pilot -->
+<div class="slide">
+  <div class="slide-content">
+    <div class="kicker">Let's prove it on your market</div>
+    <h1 class="title">In <em>30 days.</em></h1>
+    <p class="lede">Pick 3 hero products and 5 markets. In 30 days you get a complete picture you can act on —
+      no long ramp-up, no big upfront commitment.</p>
+    <div class="grid g3" style="margin-top:24px;">
+      <div class="card"><p>Live price map</p></div>
+      <div class="card"><p>Seller classification</p></div>
+      <div class="card"><p>~10 evidence-ready cases</p></div>
+      <div class="card"><p>Gaps in the authorized network</p></div>
+      <div class="card"><p>Shortlist of new partners</p></div>
+      <div class="card"><p>Temperature check on CZ</p></div>
+    </div>
+    <p class="note">Zbyněk Kocian · Petr Rohan · Jan Tichý — intelligence first, action on your terms.</p>
+  </div>
+  <div class="foot"><span class="brandmark">Brand Shield</span><span>21</span></div>
+</div>
+
+</div><!-- /.slide-deck -->
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prevSlide()">←</button>
+  <span class="slide-counter"><span id="current">1</span> / <span id="total">21</span></span>
+  <button class="nav-btn" onclick="nextSlide()">→</button>
+</div>
+</div><!-- /#deck-wrap -->
+
+<script>
+/* ===== password gate (client-side, obfuscated) ===== */
+/* phrase: brandshield2026 — SHA-256 hash below */
+const PW_HASH="8dc2f2e7e31010dae0ef3aeb069f52be1c8d07f9161c5ad4ea5f3c7ff22df754";
+async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+async function tryUnlock(){
+  const v=document.getElementById('pw').value.trim();
+  const h=await sha256(v);
+  if(h===PW_HASH){unlock();}
+  else{document.getElementById('err').textContent="Incorrect phrase.";}
+}
+function unlock(){document.body.classList.add('unlocked');sessionStorage.setItem('bs_ok','1');showSlide(1);}
+document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryUnlock();});
+if(sessionStorage.getItem('bs_ok')==='1'){document.body.classList.add('unlocked');}
+
+/* ===== deck nav ===== */
+let current=1;
+const slides=document.querySelectorAll('.slide');
+const total=slides.length;
+document.getElementById('total').textContent=total;
+let heroDrawn=false;
+function showSlide(n){
+  if(n<1)n=1; if(n>total)n=total; current=n;
+  slides.forEach((s,i)=>s.classList.toggle('active',i===n-1));
+  document.getElementById('current').textContent=n;
+  document.getElementById('progressBar').style.width=(n/total*100)+'%';
+  const heroSlide=document.getElementById('heroChart')?.closest('.slide');
+  if(heroSlide&&slides[n-1]===heroSlide&&!heroDrawn){drawHero();heroDrawn=true;}
+}
+function nextSlide(){showSlide(current+1);}
+function prevSlide(){showSlide(current-1);}
+document.addEventListener('keydown',e=>{
+  if(!document.body.classList.contains('unlocked'))return;
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextSlide();}
+  if(e.key==='ArrowLeft'){e.preventDefault();prevSlide();}
+});
+document.addEventListener('click',e=>{
+  if(!document.body.classList.contains('unlocked'))return;
+  if(!e.target.closest('.nav-controls')&&!e.target.closest('#gate'))nextSlide();
+});
+
+function drawHero(){
+  const labels=['FR','DE','CZ','PL','RO'];
+  const avg=[96,93,89,78,74];
+  const min=[88,84,80,63,61];
+  const sellers=[42,38,21,17,9];
+  const ctx=document.getElementById('heroChart');
+  if(ctx){
+    new Chart(ctx,{
+      type:'line',
+      data:{labels,datasets:[
+        {label:'Average price',data:avg,borderColor:'#D98A3D',backgroundColor:'rgba(217,138,61,0.08)',borderWidth:3,fill:true,tension:.35,pointRadius:3,pointBackgroundColor:'#D98A3D'},
+        {label:'Minimum price',data:min,borderColor:'#5B86C9',backgroundColor:'rgba(91,134,201,0.10)',borderWidth:3,fill:true,tension:.35,pointRadius:3,pointBackgroundColor:'#5B86C9'}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#A7A39B'}},
+          y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#A7A39B',callback:v=>'€'+v}}
+        }}
+    });
+  }
+  const sctx=document.getElementById('sellerChart');
+  if(sctx){
+    new Chart(sctx,{
+      type:'bar',
+      data:{labels,datasets:[
+        {label:'# shops',data:sellers,backgroundColor:'rgba(140,111,46,0.55)',borderColor:'#8C6F2E',borderWidth:1,borderRadius:4,barThickness:34}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+' shops'}}},
+        scales:{
+          x:{grid:{display:false},ticks:{color:'#A7A39B'}},
+          y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#A7A39B',precision:0}}
+        }}
+    });
+  }
+}
+showSlide(1);
+</script>
+</body>
+</html>
