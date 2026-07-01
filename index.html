@@ -109,6 +109,10 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
 .chart-wrap{width:min(92%,820px);height:clamp(220px,42vh,400px);margin:26px auto 0;position:relative;}
 .legend{display:flex;gap:24px;justify-content:center;margin-top:14px;font-size:13px;color:var(--ink-dim);flex-wrap:wrap;}
 .legend i{display:inline-block;width:14px;height:3px;margin-right:7px;vertical-align:middle;}
+.selltbl{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
+.selltbl a{font-size:clamp(11px,1.1vw,13px);color:var(--ink-dim);text-decoration:none;
+  border:1px solid var(--card-border);border-radius:8px;padding:5px 11px;transition:.2s;background:var(--card);}
+.selltbl a:hover{border-color:var(--gold);color:var(--gold-soft);}
 
 .divider .slide-content{text-align:left;}
 .divider .pill-index{font-family:var(--font-head);font-size:clamp(60px,12vw,150px);color:rgba(201,162,75,0.12);line-height:.9;font-weight:700;}
@@ -154,8 +158,8 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
 <div class="slide active">
   <div class="slide-content">
     <div class="kicker">Prepared for the CEO · Estée Lauder Group · Europe</div>
-    <h1 class="title"><em>Advanced Night Repair</em> sells<br>across Europe from <em>€100 to €48.</em></h1>
-    <p class="lede">That ~52% spread on your hero product is brand equity leaking across markets you don't fully see.
+    <h1 class="title"><em>Advanced Night Repair 50ml</em> sells<br>across Europe from <em>€85 to €41.</em></h1>
+    <p class="lede">That ~52% spread on your hero product — same 50ml serum, wildly different prices — is brand equity leaking across markets you don't fully see.
       We make every price, every seller, every market visible — and read it for you.</p>
   </div>
   <div class="foot"><span class="brandmark">Brand Shield</span><span>Live Google Shopping data, 2026-07-01 · Brand Shield is a working name</span></div>
@@ -260,11 +264,18 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
 <div class="slide">
   <div class="slide-content">
     <div class="kicker">Signature view · live data</div>
-    <h2 class="title"><em>Advanced Night Repair</em> across the main markets</h2>
-    <div class="chart-wrap" style="height:clamp(180px,32vh,300px);margin-top:18px;"><canvas id="heroChart"></canvas></div>
-    <div class="legend"><span><i style="background:var(--orange)"></i>Average price (€)</span><span><i style="background:var(--blue)"></i>Minimum price (€)</span><span><i style="background:var(--gold-deep)"></i># shops offering it</span></div>
-    <div class="chart-wrap" style="height:clamp(110px,18vh,160px);margin-top:8px;"><canvas id="sellerChart"></canvas></div>
-    <p class="note">Markets: FR · DE · CZ · PL · RO. Live Google Shopping data (2026-07-01), cleaned to the 50ml serum and converted to EUR. Cheapest sellers: PL €48 (Stylevana / Allegro) vs. DE €76 — the gray-market spread, visible.</p>
+    <h2 class="title"><em>Advanced Night Repair · 50ml Serum</em><br>across the main markets</h2>
+    <div class="chart-wrap" style="height:clamp(160px,28vh,270px);margin-top:14px;"><canvas id="heroChart"></canvas></div>
+    <div class="legend"><span><i style="background:var(--orange)"></i>Average (€)</span><span><i style="background:var(--blue)"></i>Minimum (€)</span><span><i style="background:var(--gold-deep)"></i># shops</span></div>
+    <div class="chart-wrap" style="height:clamp(90px,15vh,140px);margin-top:6px;"><canvas id="sellerChart"></canvas></div>
+    <div class="selltbl">
+      <a href="https://www.google.fr/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">FR · Olara €62</a>
+      <a href="https://www.google.de/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">DE · Amazon.de €43</a>
+      <a href="https://www.google.cz/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">CZ · Heureka €43</a>
+      <a href="https://www.google.pl/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">PL · Stylevana €48</a>
+      <a href="https://www.google.ro/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">RO · eBay €41</a>
+    </div>
+    <p class="note">Same 50ml serum. Live Google Shopping (2026-07-01), cleaned &amp; converted to EUR. Cheapest seller per market ↑ (links open Google Shopping). Spread €85 avg FR → €41 RO.</p>
   </div>
   <div class="foot"><span class="brandmark">Brand Shield</span><span>07 · Pillar 1</span></div>
 </div>
@@ -531,14 +542,14 @@ document.addEventListener('keydown',e=>{
 });
 document.addEventListener('click',e=>{
   if(!document.body.classList.contains('unlocked'))return;
-  if(!e.target.closest('.nav-controls')&&!e.target.closest('#gate'))nextSlide();
+  if(!e.target.closest('.nav-controls')&&!e.target.closest('#gate')&&!e.target.closest('a'))nextSlide();
 });
 
 function drawHero(){
   const labels=['FR','DE','CZ','PL','RO'];
-  const avg=[86,100,86,67,80];
-  const min=[62,76,51,48,55];
-  const sellers=[8,5,7,10,8];
+  const avg=[85,80,78,66,69];
+  const min=[62,43,43,48,41];
+  const sellers=[8,4,5,6,6];
   const ctx=document.getElementById('heroChart');
   if(ctx){
     new Chart(ctx,{
