@@ -6,10 +6,14 @@ import json, re, statistics
 
 DIR = "/private/tmp/claude-501/-Users-petrrohan-Developer-DEV-products-ecomradar/37528dc7-95ed-4614-87b2-14e9b82d33e9/scratchpad"
 
-FX = {"fr": 1.0, "de": 1.0, "cz": 1/25.0, "pl": 1/4.3, "ro": 1/4.97, "at": 1.0}
-CURR = {"fr": "EUR", "de": "EUR", "cz": "CZK", "pl": "PLN", "ro": "RON", "at": "EUR"}
+FX = {"fr": 1.0, "de": 1.0, "cz": 1/25.0, "pl": 1/4.3, "ro": 1/4.97}
+CURR = {"fr": "EUR", "de": "EUR", "cz": "CZK", "pl": "PLN", "ro": "RON"}
 
 CORE = re.compile(r"advanced\s*night\s*repair", re.I)
+# aggregators / price-comparison portals — NOT sellers (they only advertise, redirect elsewhere)
+AGGREGATOR = re.compile(r"\b(heureka|zbozi|glami|favi|idealo|geizhals|billiger|"
+                        r"pricerunner|kelkoo|ceneo|skapiec|shopmania|compari|"
+                        r"google\s*shopping|nakupi)\b", re.I)
 # HARD exclude — different products / sizes / bundles
 EXCLUDE = re.compile(
     r"\b(overnight\s*treatment|65\s*ml|intense\s*reset|concentr|koncentr|"
@@ -40,6 +44,8 @@ def clean_country(gl):
                 continue
             if EXCLUDE.search(title):
                 continue
+            if AGGREGATOR.search(src):   # Heureka & co. = advertiser, not a seller
+                continue
             sz = size_of(title)
             # if a size is stated, it MUST be 50ml; if no size stated, keep (default ANR serum = 50ml)
             if sz is not None and sz != 50:
@@ -55,7 +61,7 @@ print("STRICT 50ml Advanced Night Repair Serum only\n")
 print(f"{'CTY':<4} {'CURR':<5} {'#offer':>6} {'#shop':>6} {'avg€':>7} {'min€':>7} {'max€':>7}")
 print("-" * 52)
 result = {}
-order = ["fr", "de", "cz", "pl", "ro", "at"]
+order = ["fr", "de", "cz", "pl", "ro"]
 for gl in order:
     import os
     if not os.path.exists(f"{DIR}/anr_{gl}.json"):

@@ -271,11 +271,11 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
     <div class="selltbl">
       <a href="https://www.google.fr/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">FR · Olara €62</a>
       <a href="https://www.google.de/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">DE · Amazon.de €43</a>
-      <a href="https://www.google.cz/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">CZ · Heureka €43</a>
+      <a href="https://www.google.cz/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">CZ · eBay €59</a>
       <a href="https://www.google.pl/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">PL · Stylevana €48</a>
       <a href="https://www.google.ro/search?tbm=shop&q=Est%C3%A9e+Lauder+Advanced+Night+Repair+50ml" target="_blank">RO · eBay €41</a>
     </div>
-    <p class="note">Same 50ml serum. Live Google Shopping (2026-07-01), cleaned &amp; converted to EUR. Cheapest seller per market ↑ (links open Google Shopping). Spread €85 avg FR → €41 RO.</p>
+    <p class="note">Same 50ml serum. Live Google Shopping (2026-07-01), cleaned &amp; converted to EUR — price-comparison aggregators (Heureka et al.) excluded, only actual sellers &amp; marketplaces. Cheapest per market ↑. Spread €86 avg CZ → €41 RO min.</p>
   </div>
   <div class="foot"><span class="brandmark">Brand Shield</span><span>07 · Pillar 1</span></div>
 </div>
@@ -547,9 +547,9 @@ document.addEventListener('click',e=>{
 
 function drawHero(){
   const labels=['FR','DE','CZ','PL','RO'];
-  const avg=[85,80,78,66,69];
-  const min=[62,43,43,48,41];
-  const sellers=[8,4,5,6,6];
+  const avg=[85,80,86,66,69];
+  const min=[62,43,59,48,41];
+  const sellers=[8,4,4,6,6];
   const ctx=document.getElementById('heroChart');
   if(ctx){
     new Chart(ctx,{
