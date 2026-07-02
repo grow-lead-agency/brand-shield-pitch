@@ -15,13 +15,13 @@ So seller counts + price ranges come from **price-comparison portals**, scraped 
 | DE | idealo.de (product 200519186) | 47 | 41 | 70 | 101 |
 | CZ | Heureka (detail page) | 21 | 43 | 58 | 72 |
 | PL | Ceneo (product 96401250) | 22 | 47 | 66 | 94 |
-| RO | Google Shopping* | 5 | 64 | 81 | 116 |
+| ~~RO~~ | dropped | — | — | — | — |
 
-- avg€    = [79, 70, 58, 66, 81]
-- min€    = [47, 41, 43, 47, 64]
-- sellers = [25, 47, 21, 22, 5]
+- avg€    = [70, 79, 66, 58]  (DE,FR,PL,CZ)
+- min€    = [41, 47, 47, 43]  (DE,FR,PL,CZ)
+- sellers = [47, 25, 22, 21]  (DE,FR,PL,CZ)
 
-*RO investigated thoroughly: price.ro/compari.ro blocked (cookie-wall), eMAG has NO clean ANR 50ml serum listing (luxury beauty sells via Notino.ro/Douglas, not eMAG). Real RO market = 5 sellers (Notino.ro, Fragrance.com, Creme de la Creme, 2x eBay). This thinness is a genuine market fact, not a scraping gap — and itself an insight (few authorized sellers = coverage risk).
+**RO dropped** — could NOT verify the exact SKU. Google Shopping RO returned only 1-2 of 5 offers as the real Synchronized Multi-Recovery Complex 50ml; the rest were Eau de Toilette / Breast Cancer edition / unclear variant. Unlike DE/FR/PL/CZ (verified per product-detail page = guaranteed one SKU), RO via keyword search is unreliable. Kept only the 4 verified markets. See PRD-discovery-layer §8b for the general learning.
 
 ## Notes
 - Aggregators themselves (Heureka/idealo/Ceneo as a "seller") are excluded — they advertise, they don't sell.

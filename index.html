@@ -159,7 +159,7 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
   <div class="slide-content">
     <div class="kicker">Prepared for the CEO · Estée Lauder Group · Europe</div>
     <h1 class="title"><em>Advanced Night Repair · Synchronized Multi-Recovery Complex 50ml</em><br>sells across Europe from <em>€79 to €41.</em></h1>
-    <p class="lede">That ~48% spread on one exact SKU — same 50ml serum, across 20–47 sellers per market — is brand equity leaking across markets you don't fully see.
+    <p class="lede">That ~48% spread on one exact SKU — same 50ml serum, verified per product-detail across 21–47 sellers per market — is brand equity leaking across markets you don't fully see.
       We make every price, every seller, every market visible — and read it for you.</p>
   </div>
   <div class="foot"><span class="brandmark">Brand Shield</span><span>Live Google Shopping data, 2026-07-01 · Brand Shield is a working name</span></div>
@@ -269,13 +269,12 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
     <div class="legend"><span><i style="background:var(--orange)"></i>Average (€)</span><span><i style="background:var(--blue)"></i>Minimum (€)</span><span><i style="background:var(--gold-deep)"></i># sellers</span></div>
     <div class="chart-wrap" style="height:clamp(90px,15vh,140px);margin-top:6px;"><canvas id="sellerChart"></canvas></div>
     <div class="selltbl">
-      <a href="https://www.idealo.fr/prix/200519186/estee-lauder-advanced-night-repair-synchronized-multi-recovery-complex-50ml.html" target="_blank">FR · idealo · 25 sellers</a>
       <a href="https://www.idealo.de/preisvergleich/OffersOfProduct/200519186_-advanced-night-repair-synchronized-multi-recovery-complex-50ml-estee-lauder.html" target="_blank">DE · idealo · 47 sellers</a>
-      <a href="https://pletova-sera-emulze.heureka.cz/estee-lauder-advanced-night-repair-synchronized-multi-recovery-complex-50-ml/" target="_blank">CZ · Heureka · 21 shops</a>
+      <a href="https://www.idealo.fr/prix/200519186/estee-lauder-advanced-night-repair-synchronized-multi-recovery-complex-50ml.html" target="_blank">FR · idealo · 25 sellers</a>
       <a href="https://www.ceneo.pl/96401250" target="_blank">PL · Ceneo · 22 offers</a>
-      <a href="https://www.google.ro/search?tbm=shop&q=Advanced+Night+Repair+Synchronized+Multi-Recovery+Complex+50ml" target="_blank">RO · only 5 sellers</a>
+      <a href="https://pletova-sera-emulze.heureka.cz/estee-lauder-advanced-night-repair-synchronized-multi-recovery-complex-50-ml/" target="_blank">CZ · Heureka · 21 shops</a>
     </div>
-    <p class="note">One exact SKU — Synchronized Multi-Recovery Complex 50ml (not the older Complex II). Real seller counts from price-comparison portals (2026-07-01), FX→EUR. Spread: FR avg €79 → €41 min (DE). <span class="gold">RO stands out: only 5 sellers — a thin, under-covered market. That gap is itself an insight</span> (few authorized sellers = risk &amp; opportunity). Links open the live source ↑.</p>
+    <p class="note">One exact SKU — Synchronized Multi-Recovery Complex 50ml (not the older Complex II or Eau de Toilette). Seller counts verified per product-detail page on each price-comparison portal (2026-07-01), FX→EUR. Spread: FR avg €79 → €41 min DE. Links open the live source ↑.</p>
   </div>
   <div class="foot"><span class="brandmark">Brand Shield</span><span>07 · Pillar 1</span></div>
 </div>
@@ -546,10 +545,10 @@ document.addEventListener('click',e=>{
 });
 
 function drawHero(){
-  const labels=['FR','DE','CZ','PL','RO'];
-  const avg=[79,70,58,66,81];
-  const min=[47,41,43,47,64];
-  const sellers=[25,47,21,22,5];
+  const labels=['DE','FR','PL','CZ'];
+  const avg=[70,79,66,58];
+  const min=[41,47,47,43];
+  const sellers=[47,25,22,21];
   const ctx=document.getElementById('heroChart');
   if(ctx){
     new Chart(ctx,{
