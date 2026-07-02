@@ -157,7 +157,7 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
 <!-- 1 — Title -->
 <div class="slide active">
   <div class="slide-content">
-    <div class="kicker">Prepared for the CEO · Estée Lauder Group · Europe</div>
+    <div class="kicker">Prepared for Estée Lauder Group · Europe</div>
     <h1 class="title"><em>Advanced Night Repair · Synchronized Multi-Recovery Complex 50ml</em><br>sells across Europe from <em>€79 to €41.</em></h1>
     <p class="lede">That ~48% spread on one exact SKU — same 50ml serum, verified per product-detail across 21–47 sellers per market — is brand equity leaking across markets you don't fully see.
       We make every price, every seller, every market visible — and read it for you.</p>
@@ -421,7 +421,7 @@ h2.title{font-family:var(--font-head);font-weight:600;font-size:clamp(24px,3.4vw
       <div class="step"><span class="si">2</span><div><h3>Sample order + recording the process</h3><p>We deliberately order the product/sample from the given shop and <span class="gold">record the entire process</span> (order → delivery → unboxing). Physical proof, not just a screenshot.</p></div></div>
       <div class="step"><span class="si">3</span><div><h3>Litigation</h3><p>We represent — together with law firms. For smaller brands: if someone runs another brand, we advise them to use this too.</p></div></div>
     </div>
-    <p class="note">It stands on evidence from Pillar 2 (screenshot, timestamp, test purchase). The client chooses how far to go.</p>
+    <p class="note">It stands on evidence built in Pillar 2 (screenshots, timestamps, the case file). The client chooses how far to go.</p>
   </div>
   <div class="foot"><span class="brandmark">Brand Shield</span><span>17 · Pillar 3</span></div>
 </div>
@@ -534,13 +534,10 @@ function nextSlide(){showSlide(current+1);}
 function prevSlide(){showSlide(current-1);}
 document.addEventListener('keydown',e=>{
   if(!document.body.classList.contains('unlocked'))return;
-  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextSlide();}
-  if(e.key==='ArrowLeft'){e.preventDefault();prevSlide();}
+  if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();nextSlide();}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prevSlide();}
 });
-document.addEventListener('click',e=>{
-  if(!document.body.classList.contains('unlocked'))return;
-  if(!e.target.closest('.nav-controls')&&!e.target.closest('#gate')&&!e.target.closest('a'))nextSlide();
-});
+/* click-to-advance removed — navigate only via arrow keys or the ← → buttons */
 
 function drawHero(){
   const labels=['DE','FR','PL','CZ'];
