@@ -1,0 +1,23 @@
+index.html
+  s_1113613f3c26ad::t_235655e8e15968 273,275,277
+  s_1113613f3c26ad::t_14942a8bf0e380 162
+  s_1113613f3c26ad::t_39040144f28bc3 548-551
+data/README.md
+  s_1113613f3c26ad::t_fc3289db6aaefb 18,20-22,24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "12427c1727d8c3eb30a5be45116a182bf57f9658",
+  "prompts": {},
+  "sessions": {
+    "s_1113613f3c26ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "37528dc7-95ed-4614-87b2-14e9b82d33e9",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Petr Rohan <petr.a.rohan@gmail.com>"
+    }
+  }
+}
