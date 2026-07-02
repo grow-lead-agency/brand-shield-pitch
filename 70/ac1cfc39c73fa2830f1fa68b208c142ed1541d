@@ -1,0 +1,21 @@
+index.html
+  s_1113613f3c26ad::t_e8ec7cf5ebae34 467-485
+  s_1113613f3c26ad::t_52b03f3217dfa9 499
+  s_1113613f3c26ad::t_e726e253792b37 516
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "70ac1cfc39c73fa2830f1fa68b208c142ed1541d",
+  "prompts": {},
+  "sessions": {
+    "s_1113613f3c26ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "37528dc7-95ed-4614-87b2-14e9b82d33e9",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Petr Rohan <petr.a.rohan@gmail.com>"
+    }
+  }
+}
